@@ -3,12 +3,11 @@ package devsuperior.com.application;
 import devsuperior.com.entities.Sale;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Program {
     public static void main(String[] args) {
@@ -29,8 +28,26 @@ public class Program {
                 line = br.readLine();
             }
 
+            list.stream()
+                    .filter(p -> p.getYear() == 2016)
+                    .sorted(Comparator.comparing(Sale::averagePrice).reversed())
+                    .limit(5)
+                    .collect(Collectors.toList())
+                    .forEach(System.out::println);
+
+            Double sumL = list.stream()
+                    .filter(p -> (p.getSeller().equals("Logan") && p.getMonth() == 1)
+                    || (p.getSeller().equals("Logan") && p.getMonth() == 7))
+                    .map(s -> s.getTotal())
+                    .reduce(0.0, (x, y) -> x + y);
+
+            System.out.println();
+            System.out.println("Valor total vendido pelo vendedor Logan nos meses 1 e 7 = " + sumL);
+
+        }catch (FileNotFoundException e){
+            System.out.println("Erro: "+ patch + " (O sistema não pode encontrar o arquivo especificado)");
         }catch (IOException e){
-            System.out.println("Error: "+ e.getMessage());
+            System.out.println("Erro: " + e.getMessage());
         }
         sc.close();
     }
