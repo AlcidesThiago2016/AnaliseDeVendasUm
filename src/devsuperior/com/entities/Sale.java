@@ -10,6 +10,14 @@ public class Sale {
     public Sale() {
     }
 
+    public Sale(Integer month, Integer year, String seller, Integer items, Double total) {
+        this.month = month;
+        this.year = year;
+        this.seller = seller;
+        this.items = items;
+        this.total = total;
+    }
+
     public Integer getMonth() {
         return month;
     }
